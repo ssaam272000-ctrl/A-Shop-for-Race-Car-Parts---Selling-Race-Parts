@@ -45,6 +45,6 @@ public class AddToCartServlet extends HttpServlet {
             cart.addItem(product, quantity);
         }
         
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("index");
     }
 }

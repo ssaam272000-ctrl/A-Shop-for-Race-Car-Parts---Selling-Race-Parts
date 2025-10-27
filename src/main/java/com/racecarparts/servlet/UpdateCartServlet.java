@@ -14,14 +14,25 @@ import java.io.IOException;
 public class UpdateCartServlet extends HttpServlet {
     
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
         HttpSession session = request.getSession();
         ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
         
         if (cart == null) {
-            response.sendRedirect("cart.jsp");
+            response.sendRedirect("cart");
             return;
         }
         
@@ -49,6 +60,6 @@ public class UpdateCartServlet extends HttpServlet {
             cart.clear();
         }
         
-        response.sendRedirect("cart.jsp");
+        response.sendRedirect("cart");
     }
 }
