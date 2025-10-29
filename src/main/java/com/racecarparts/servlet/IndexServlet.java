@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet({"", "/", "/index"})
@@ -31,60 +32,97 @@ public class IndexServlet extends HttpServlet {
         
         PrintWriter out = response.getWriter();
         out.println("<!DOCTYPE html>");
-        out.println("<html lang=\"en\">");
+        out.println("<html>");
         out.println("<head>");
-        out.println("    <meta charset=\"UTF-8\">");
-        out.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-        out.println("    <title>A Shop for Race Car Parts - Babby-Hemanth-Saam LLC</title>");
-        out.println("    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\">");
-        out.println("    <link rel=\"stylesheet\" href=\"css/style.css\">");
+        out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
+        out.println("<title>A Shop for Race Car Parts</title>");
+        out.println("<style>");
+        out.println("body {");
+        out.println("    background-color: hsl(89, 43%, 51%);");
+        out.println("    font-family: Arial, sans-serif;");
+        out.println("    padding: 20px;");
+        out.println("}");
+        out.println("h1 {");
+        out.println("    background-color: hsl(185, 65%, 70%);");
+        out.println("    padding: 15px;");
+        out.println("    border-radius: 5px;");
+        out.println("}");
+        out.println("h2 {");
+        out.println("    background-color: DodgerBlue;");
+        out.println("    color: white;");
+        out.println("    padding: 10px;");
+        out.println("    border-radius: 5px;");
+        out.println("}");
+        out.println("ul {");
+        out.println("    list-style-type: none;");
+        out.println("    padding: 0;");
+        out.println("}");
+        out.println("li {");
+        out.println("    background-color: white;");
+        out.println("    margin: 10px 0;");
+        out.println("    padding: 15px;");
+        out.println("    border-radius: 5px;");
+        out.println("    box-shadow: 0 2px 4px rgba(0,0,0,0.1);");
+        out.println("}");
+        out.println(".price {");
+        out.println("    color: #e91e63;");
+        out.println("    font-size: 24px;");
+        out.println("    font-weight: bold;");
+        out.println("}");
+        out.println(".part-info {");
+        out.println("    margin-top: 10px;");
+        out.println("    color: #333;");
+        out.println("}");
+        out.println("button {");
+        out.println("    background-color: #00bcd4;");
+        out.println("    color: white;");
+        out.println("    border: none;");
+        out.println("    padding: 10px 20px;");
+        out.println("    border-radius: 5px;");
+        out.println("    cursor: pointer;");
+        out.println("    font-size: 16px;");
+        out.println("}");
+        out.println("button:hover {");
+        out.println("    background-color: #0097a7;");
+        out.println("}");
+        out.println(".cart-link {");
+        out.println("    float: right;");
+        out.println("    background-color: white;");
+        out.println("    color: #0097a7;");
+        out.println("    padding: 10px 20px;");
+        out.println("    text-decoration: none;");
+        out.println("    border-radius: 5px;");
+        out.println("    font-weight: bold;");
+        out.println("}");
+        out.println(".date {");
+        out.println("    background-color: rgba(255,255,255,0.7);");
+        out.println("    padding: 5px 10px;");
+        out.println("    border-radius: 3px;");
+        out.println("    display: inline-block;");
+        out.println("}");
+        out.println("</style>");
         out.println("</head>");
         out.println("<body>");
-        out.println("    <div class=\"container-fluid\">");
-        out.println("        <header class=\"header-bar\">");
-        out.println("            <h1 class=\"main-title\">A Shop for Race Car Parts</h1>");
-        out.println("            <a href=\"cart\" class=\"cart-link\">For Customer</a>");
-        out.println("        </header>");
-        out.println("        <h2 class=\"company-name\">Babby-Hemanth-Saam LLC</h2>");
-        out.println("        ");
-        out.println("        <div class=\"product-grid\">");
         
-        for (EngineBlock product : products) {
-            out.println("            <div class=\"product-card\">");
-            out.println("                <div class=\"product-image\">");
-            out.println("                    <div class=\"engine-block-placeholder\"></div>");
-            out.println("                </div>");
-            out.println("                <div class=\"product-info\">");
-            out.printf("                    <div class=\"price\">$%.2f</div>%n", product.getPrice());
-            out.println("                    <form action=\"addToCart\" method=\"post\" class=\"add-form\">");
-            out.printf("                        <input type=\"hidden\" name=\"partId\" value=\"%s\">%n", product.getPartId());
-            out.println("                        <input type=\"hidden\" name=\"quantity\" value=\"1\">");
-            out.println("                        <button type=\"submit\" class=\"btn-add\">Add</button>");
-            out.println("                    </form>");
-            out.println("                </div>");
-            out.println("                <div class=\"product-details\">");
-            out.printf("                    <strong>Part %s</strong> %s%n", product.getPartId(), product.getName());
-            out.println("                </div>");
-            out.println("            </div>");
+        out.println("<h1>A Shop for Race Car Parts <a href=\"cart\" class=\"cart-link\">View Cart (" + cartItems + ")</a></h1>");
+        out.println("<h2>Hemanth-Saam LLC</h2>");
+        out.println("<p class=\"date\">Date: " + new Date() + "</p>");
+        
+        out.println("<ul>");
+        for (EngineBlock part : products) {
+            out.println("    <li>");
+            out.printf("        <div class=\"price\">$%.2f</div>%n", part.getPrice());
+            out.printf("        <div class=\"part-info\"><strong>Part %s</strong> - %s</div>%n", 
+                      part.getPartId(), part.getName());
+            out.println("        <form action=\"addToCart\" method=\"post\" style=\"margin-top: 10px;\">");
+            out.printf("            <input type=\"hidden\" name=\"partId\" value=\"%s\">%n", part.getPartId());
+            out.println("            <input type=\"hidden\" name=\"quantity\" value=\"1\">");
+            out.println("            <button type=\"submit\">Add to Cart</button>");
+            out.println("        </form>");
+            out.println("    </li>");
         }
+        out.println("</ul>");
         
-        out.println("        </div>");
-        out.println("        ");
-        out.println("        <div class=\"footer-content\">");
-        out.println("            <div class=\"car-image-placeholder\"></div>");
-        
-        if (cartItems > 0) {
-            out.println("            <div class=\"cart-preview\">");
-            out.println("                <h3>Shopping Cart:</h3>");
-            out.printf("                <p>You have %d item(s) in your cart</p>%n", cartItems);
-            out.println("                <a href=\"cart\" class=\"btn btn-primary\">View Cart</a>");
-            out.println("            </div>");
-        }
-        
-        out.println("        </div>");
-        out.println("    </div>");
-        out.println("    ");
-        out.println("    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js\"></script>");
         out.println("</body>");
         out.println("</html>");
     }
