@@ -25,6 +25,7 @@ public class Main {
         
         Context context = tomcat.addContext("", new File(".").getAbsolutePath());
         
+        // Register servlets
         Tomcat.addServlet(context, "IndexServlet", new com.racecarparts.servlet.IndexServlet());
         context.addServletMappingDecoded("", "IndexServlet");
         context.addServletMappingDecoded("/", "IndexServlet");
@@ -44,11 +45,6 @@ public class Main {
         
         File staticDir = new File(webappDir);
         context.setDocBase(staticDir.getAbsolutePath());
-        
-        org.apache.catalina.servlets.DefaultServlet defServlet = new org.apache.catalina.servlets.DefaultServlet();
-        Tomcat.addServlet(context, "default", defServlet);
-        context.addServletMappingDecoded("/css/*", "default");
-        context.addServletMappingDecoded("/js/*", "default");
         
         System.out.println("===========================================");
         System.out.println("Starting Tomcat server on port " + port);
