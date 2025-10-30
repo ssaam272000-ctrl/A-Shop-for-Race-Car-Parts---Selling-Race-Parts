@@ -19,7 +19,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>A Shop for Race Car Parts</title>
 <style>
-body {
+/* body {
     background-color: hsl(89, 43%, 51%);
     font-family: Arial, sans-serif;
     padding: 20px;
@@ -70,7 +70,7 @@ button {
 }
 button:hover {
     background-color: #0097a7;
-}
+} */
 </style>
 </head>
 
