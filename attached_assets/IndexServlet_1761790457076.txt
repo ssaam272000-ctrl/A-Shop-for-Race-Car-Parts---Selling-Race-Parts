@@ -1,0 +1,37 @@
+package com.racecarparts.servlet;
+
+import java.util.List;
+import com.racecarparts.shop.EngineBlock;
+import com.racecarparts.shop.ShoppingCart;
+import com.racecarparts.util.ProductCatalog;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet({"", "/", "/index"})
+public class IndexServlet extends HttpServlet{ // handle all the web requests match the home page with index file, 
+
+	 @Override
+	    protected void doGet(HttpServletRequest request, HttpServletResponse response) { // doGet function for a get request to the website, it will execute DoGet function.
+
+		 response.setContentType("text/html;charset=UTF-8"); // runs when someone runs page, and gives HTML
+		 response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // We don't want cache right now
+		 HttpSession session = request.getSession(); // Create a web session
+		 ShoppingCart cart = (ShoppingCart) session.getAttribute("cart"); // this is creating a shopping cart object whenever someone makes a get request.
+
+		 int cartItems = 0;
+		 
+		 if (cart != null) {
+			 cartItems = cart.getTotalItems(); // Calls the cartItems method
+					 
+		 }
+		 List<EngineBlock> allProducts = ProductCatalog.getAllProducts(); // Getting a list of all the products call the method that we just defined to get all products. It was defined in the Product Catalog class.
+			 
+		 }
+				
+}	 
+
+

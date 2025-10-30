@@ -1,0 +1,76 @@
+package com.racecarparts.shop;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShoppingCart {
+	private List<OrderLine> orderLine;
+	private double shippingRate = 0.05;
+	private double taxRate = 0.10;
+
+	public ShoppingCart() {
+		orderLine = new ArrayList<OrderLine>();
+	}
+
+	public double getSubTotal() {
+		double sum = 0;
+		for (OrderLine currentOrder : orderLine) {
+			sum += currentOrder.getOrderTotal();
+		}
+		return sum;
+	}
+
+	public double getTotal() {
+		double SubTotal = this.getSubTotal();
+		return SubTotal + (SubTotal * shippingRate) + (SubTotal * taxRate);
+	}
+
+	public double getTax() {
+		double SubTotal = this.getSubTotal();
+		return SubTotal * taxRate;
+	}
+
+	public double getCarrier() {
+		double SubTotal = this.getSubTotal();
+		return SubTotal * shippingRate;
+	}
+	public void addItem(EngineBlock block, int quantity) { // Adding item
+		for (OrderLine o : orderLine) { // Check each engine block in order line, check if we already have our item in our orderLine.
+			if (o.getEngineBlock().getEngineName().equals(block.getEngineName())) { // Used to update the quantity of an existing item in the orderLine.
+				int newQuantity = o.getQuantity() + quantity;  // variable
+				o.setQuantity(newQuantity);
+				return; // Exit after updating
+			}
+				 
+		}
+		orderLine.add(new OrderLine(block, quantity)); // This adds a new OrderLine item to your shopping cart.
+	}
+	public void removeItem(String EngineBlockName) {
+		orderLine.removeIf(line -> line.getEngineBlock().getEngineName().equals(EngineBlockName)); // Loops through the Array List of order line and matches the name of each order line with the EngineBlock name that you are trying to remove. If matches it removes it from OrderLine Array List.
+	}
+	public void clear() { // remove Everything from the Shopping Cart
+		orderLine.clear();
+	}
+	public boolean isEmpty() {
+		return orderLine.isEmpty();
+	}
+	public int getTotalItems() { // This will give you the total number of items in the shopping cart
+		return orderLine.size();
+	}
+	public List<OrderLine> getOrderLines() { // Get all order lines for displaying in cart
+		return orderLine;
+	}
+	public void updateQuantity(String partID, int quantity) { // Update the Quantity of the Engine Block with PartID to provide the quantity.
+		if (quantity <= 0) {
+			removeItem(partID);
+			return;
+		}
+		for (OrderLine line : orderLine) { // Loop through the OrderLine
+			if (line.getEngineBlock().getEngineName().equals(partID)) { // This checking if each line in OrderLine has a part name that matches the part name that the user wants to update.
+				line.setQuantity(quantity); // Sets the quantity
+				return; // ends this method
+			}
+		}
+	}
+	
+}

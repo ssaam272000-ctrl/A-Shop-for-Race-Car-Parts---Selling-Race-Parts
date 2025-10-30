@@ -1,0 +1,32 @@
+package com.racecarparts.servlet;
+
+import java.io.IOException;
+
+import com.racecarparts.shop.ShoppingCart;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+@WebServlet("/cart")
+public class CartServlet extends HttpServlet { // handle all the Post requests for when someone wants to add a part to
+												// our cart.
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException { // Get the part from the request parameter
+		HttpSession session = request.getSession(); // Get HTTP Session to see if we have defined a shopping cart
+													// available.
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart"); // This is trying to see if a current shopping
+																			// cart exists in our current session.
+		if (cart == null) { // SINGLETON METHOD HERE; In order to avoid creating duplicate shopping carts,
+							// if a shopping cart (DOES NOT EXIST), then it creates a new one.
+			cart = new ShoppingCart();
+			session.setAttribute("cart", cart); // This stores the shopping cart we just created into our session, so
+												// you do not have to recreate this again.
+		}
+	}
+}

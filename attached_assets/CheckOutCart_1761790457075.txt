@@ -1,0 +1,43 @@
+package com.racecarparts.servlet;
+
+import java.io.IOException;
+
+import com.racecarparts.shop.ShoppingCart;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+
+@WebServlet("/checkout")
+	public class CheckOutCart extends HttpServlet{ // handle all the Post requests for when someone wants to add a part to our cart.
+
+	@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	// Get the part from the request parameter
+		HttpSession session = request.getSession(); // Get HTTP Session to see if we have defined a shopping cart available.
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart"); // This is trying to see if a current shopping cart exists in our current session.
+		if (cart == null || cart.isEmpty()) { // If the cart doesn't exist, we will send the person to a different java post request to create a cartServlet.java.
+			response.sendRedirect("cart"); // Redirect them to the cart end-point to create it.
+			return; // Ends current DoPost method.
+			
+		}
+		String customerName = request.getParameter("customerName"); // This will give you the Name of the Customer that they provide to the website.
+		double orderTotal = cart.getTotal(); // This calls the orderTotal method
+		
+		cart.clear(); // Clears your Cart to return an empty cart
+		
+		
+		// We will write an HTML page to write the Invoice
+	}
+	@Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	// Get the part from the request parameter
+		response.sendRedirect("cart");
+	}
+}
+
+	
+	

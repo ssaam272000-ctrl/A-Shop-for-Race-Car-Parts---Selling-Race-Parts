@@ -1,0 +1,23 @@
+import java.io.File;
+
+import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.startup.Tomcat;
+
+public class Main {
+
+	public static void main(String[] args) throws LifecycleException {
+		String port = "5000";
+		Tomcat tomcat = new Tomcat();
+		tomcat.setPort(Integer.parseInt(port));
+		tomcat.setHostname("0.0.0.0");
+		tomcat.setBaseDir(".");
+		tomcat.getConnector();
+		String webappDir = new File("src/main/webapp").getAbsolutePath(); // This is trying to give you HTML from the file within this directory path.
+		Context context = tomcat.addContext("", new File(".").getAbsolutePath()); // This is to creating an empty blueprint where later it will be used to map the Sub-directories to the Java file.
+		Tomcat.addServlet(context, "IndexServlet", new com.racecarparts.servlet.IndexServlet()); // This is saying the home-page of web-site is defined in the IndexServlet file.
+		context.addServletMappingDecoded("", "IndexServlet"); // This is explicitly redirecting the user to IndexServlet if they don't type anything after the main home-page.
+		context.addServletMappingDecoded("/", "IndexServlet"); // This is explicitly redirecting the user to IndexServlet if they don't type anything after the main home-page.
+	}
+
+}
