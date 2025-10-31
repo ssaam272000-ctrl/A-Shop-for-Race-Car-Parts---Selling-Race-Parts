@@ -111,12 +111,16 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
 		 out.println("<body>");
 		 
 		 out.println("<h1>A Shop for Race Car Parts <a href=\"cart\" class=\"cart-link\">View Cart (" + cartItems + ")</a></h1>");
-		 out.println("<h2>Hemanth-Saam LLC</h2>");
+		 out.println("<h2>Gabby-Hemanth-Saam LLC</h2>");
 		 out.println("<p class=\"date\">Date: " + new Date() + "</p>");
 		 
 		 out.println("<ul>");
 		 for (EngineBlock part : allProducts) {
 			 out.println("    <li>");
+			 out.printf("        <img src=\"images/%s\" alt=\"%s\" style=\"width:200px; border-radius:5px; margin-bottom:10px;\">%n", 
+                                   part.getImageURL(), part.getDescription());
+
+			 
 			 out.printf("        <div class=\"price\">$%.2f</div>%n", part.getPrice());
 			 out.printf("        <div class=\"part-info\"><strong>%s</strong> - %s</div>%n", 
 			           part.getEngineName(), part.getDescription());
