@@ -22,7 +22,7 @@ public class Main {
 		Tomcat.addServlet(context, "IndexServlet", new com.racecarparts.servlet.IndexServlet()); // This is saying the home-page of web-site is defined in the IndexServlet file.
 		context.addServletMappingDecoded("", "IndexServlet"); // This is explicitly redirecting the user to IndexServlet if they don't type anything after the main home-page.
 		context.addServletMappingDecoded("/", "IndexServlet"); // This is explicitly redirecting the user to IndexServlet if they don't type anything after the main home-page.
-		context.addServletMappingDecoded("/index", "IndexServlet"); // This is explicitly redirecting the user to IndexServlet if they type /index.
+		context.addServletMappingDecoded("/index", "IndexServlet");
 		
 		Tomcat.addServlet(context, "CartServlet", new com.racecarparts.servlet.CartServlet()); // Mapping CartServlet to handle shopping cart display
 		context.addServletMappingDecoded("/cart", "CartServlet");
@@ -37,8 +37,7 @@ public class Main {
 		context.addServletMappingDecoded("/checkout", "CheckoutServlet");
 		
 		File staticDir = new File(webappDir);
-		context.setDocBase(staticDir.getAbsolutePath()); // Set document base for static resources
-		
+		context.setDocBase(staticDir.getAbsolutePath()); 
 		System.out.println("===========================================");
 		System.out.println("Starting Tomcat server on port " + port);
 		System.out.println("Web application directory: " + webappDir);
