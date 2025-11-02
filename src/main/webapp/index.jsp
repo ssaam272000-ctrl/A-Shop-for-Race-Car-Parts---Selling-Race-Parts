@@ -75,23 +75,31 @@ button:hover {
 </head>
 
 <body>
-<h1>A Shop for Race Car Parts <a href="cart" class="cart-link">View Cart (<%= cartItems %>)</a></h1>
-<h2>Hemanth-Saam LLC</h2>
-<p>Date: <%= new Date() %></p>
+    <section>
+        <h1>A Shop for Race Car Parts <a href="cart" class="cart-link">View Cart (<%= cartItems %>)</a></h1>
+        <h2>Hemanth-Saam LLC</h2>
+        <p>Date: <%= new Date() %></p>
+    
+    </section>
+    <section>
+          <ul>
+        <c:forEach items="${parts}" var="part">
+            <li>
+                <div class="price">$<fmt:formatNumber value="${part.price}" pattern="#,##0.00"/></div>
+                <div><strong>Part ${part.partId}</strong> - ${part.name}</div>
+                <form action="addToCart" method="post">
+                    <input type="hidden" name="partId" value="${part.partId}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </li>
+        </c:forEach>
+        </ul>      
+    </section>
+    <section>
+       <h3>Shop Owner's Report</h3> 
+    </section>    
 
-<ul>
-<c:forEach items="${parts}" var="part">
-    <li>
-        <div class="price">$<fmt:formatNumber value="${part.price}" pattern="#,##0.00"/></div>
-        <div><strong>Part ${part.partId}</strong> - ${part.name}</div>
-        <form action="addToCart" method="post">
-            <input type="hidden" name="partId" value="${part.partId}">
-            <input type="hidden" name="quantity" value="1">
-            <button type="submit">Add to Cart</button>
-        </form>
-    </li>
-</c:forEach>
-</ul>
 
 </body>
 </html>

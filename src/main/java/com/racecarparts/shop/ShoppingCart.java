@@ -72,5 +72,7 @@ public class ShoppingCart {
 			}
 		}
 	}
-	
+	public List<OrderLine> getOrderLine() { // Get all order lines for displaying in Invoice
+		return orderLine;
+	}
 }

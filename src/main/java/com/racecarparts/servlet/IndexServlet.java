@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.RequestDispatcher;
 
 @WebServlet({"", "/", "/index"})
 public class IndexServlet extends HttpServlet{ // handle all the web requests match the home page with index file, 
@@ -34,10 +35,10 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
 					 
 		 }
 		 List<EngineBlock> allProducts = ProductCatalog.getAllProducts(); // Getting a list of all the products call the method that we just defined to get all products. It was defined in the Product Catalog class.
-		 
+
 		 // Generate HTML for the home page
 		 PrintWriter out = response.getWriter();
-		 out.println("<!DOCTYPE html>");
+		 out.println("<!DOCTYPE html>"); 
 		 out.println("<html>");
 		 out.println("<head>");
 		 out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
@@ -62,6 +63,9 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
 		 out.println("ul {");
 		 out.println("    list-style-type: none;");
 		 out.println("    padding: 0;");
+				out.println(" display: grid;");
+				out.println(" grid-template-columns: repeat(3, 1fr);");
+				out.println(" gap: 15px;");
 		 out.println("}");
 		 out.println("li {");
 		 out.println("    background-color: white;");
@@ -69,7 +73,9 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
 		 out.println("    padding: 15px;");
 		 out.println("    border-radius: 5px;");
 		 out.println("    box-shadow: 0 2px 4px rgba(0,0,0,0.1);");
-		 out.println("}");
+
+				
+		out.println("}");
 		 out.println(".price {");
 		 out.println("    color: #e91e63;");
 		 out.println("    font-size: 24px;");
@@ -105,6 +111,12 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
 		 out.println("    padding: 5px 10px;");
 		 out.println("    border-radius: 3px;");
 		 out.println("    display: inline-block;");
+				out.println("}");
+				out.println(".sprint-car-image {");
+				out.println("    display: block;");
+				out.println("    margin: 20px auto;"); // Added 20 pixels of margin and the auto centers it left to right.
+				// out.println("    max-width: 400px;");
+				out.println("    width: 100%;");
 		 out.println("}");
 		 out.println("</style>");
 		 out.println("</head>");
@@ -130,9 +142,11 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
 			 out.println("            <button type=\"submit\">Add to Cart</button>");
 			 out.println("        </form>");
 			 out.println("    </li>");
+			 
 		 }
 		 out.println("</ul>");
-		 
+		 // out.println("<img src=\"/images/sprintcar.jpg\" alt=\"Sprint Car\" class=\"sprint-car-image\">");
+		 out.println("<img src=\"/images/racingsprintcars.jpg\" alt=\"Sprint Car\" class=\"sprint-car-image\">");
 		 out.println("</body>");
 		 out.println("</html>");
 	 }
