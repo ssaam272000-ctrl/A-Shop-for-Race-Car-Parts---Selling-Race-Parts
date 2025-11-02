@@ -58,7 +58,7 @@ public class ShoppingCart {
 		return orderLine.size();
 	}
 	public List<OrderLine> getOrderLines() { // Get all order lines for displaying in cart
-		return orderLine;
+		return new ArrayList<>(orderLine); // Return a copy of the orderLine list because after you clear the cart, you don't want to clear the orderLine list so that you can show the Orders in the invoice table.
 	}
 	public void updateQuantity(String partID, int quantity) { // Update the Quantity of the Engine Block with PartID to provide the quantity.
 		if (quantity <= 0) {

@@ -125,7 +125,7 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
                  out.println("<body>");
                  
                  out.println("<h1>A Shop for Race Car Parts <a href=\"cart\" class=\"cart-link\">View Cart (" + cartItems + ")</a></h1>");
-                 out.println("<h2>Gabby-Hemanth-Saam LLC</h2>");
+                 out.println("<h2>Hemanth-Saam LLC</h2>");
                  out.println("<p class=\"date\">Date: " + new Date() + "</p>");
                  
                  NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
@@ -150,7 +150,7 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
                  }
                  out.println("</ul>");
                  // out.println("<img src=\"/images/sprintcar.jpg\" alt=\"Sprint Car\" class=\"sprint-car-image\">");
-                 out.println("<img src=\"/images/racingsprintcars.jpg\" alt=\"Sprint Car\" class=\"sprint-car-image\">");
+                 out.println("<img src=\"/images/skagit-speedway.gif\" alt=\"Sprint Car\" class=\"sprint-car-image\">");
                  out.println("</body>");
                  out.println("</html>");
          }
