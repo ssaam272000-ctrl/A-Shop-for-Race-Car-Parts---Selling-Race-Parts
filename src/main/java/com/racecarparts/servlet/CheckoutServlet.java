@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Random;
 import java.text.SimpleDateFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 @WebServlet("/checkout")
         public class CheckoutServlet extends HttpServlet{ // handle all the Post requests for when someone wants to add a part to our cart.
@@ -39,6 +41,7 @@ import java.text.SimpleDateFormat;
                 double carrier = cart.getCarrier();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy"); // This will give you the date in the format of Month Day, Year.
                 String invoiceDate = dateFormat.format(new java.util.Date()); // This will give you the current date in the format of Month Day, Year.
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US); // This will format the prices with commas in the thousands place.
                 // Generate a random order number       
                 int invoiceNumber = new Random().nextInt(10000000); // This will generate a random number for the invoice number.
                         
@@ -221,8 +224,8 @@ import java.text.SimpleDateFormat;
                                 out.printf("        <td>%d</td>%n", line.getQuantity());
                                 out.printf("        <td>%s</td>%n", line.getEngineBlock().getEngineName());
                                 out.printf("        <td>%s</td>%n", line.getEngineBlock().getDescription());
-                                out.printf("        <td>$%.2f</td>%n", line.getEngineBlock().getPrice());
-                                out.printf("        <td>$%.2f</td>%n", line.getOrderTotal());
+                                out.printf("        <td>%s</td>%n", currencyFormat.format(line.getEngineBlock().getPrice()));
+                                out.printf("        <td>%s</td>%n", currencyFormat.format(line.getOrderTotal()));
                                 out.println("    </tr>");
                 }
          
@@ -230,10 +233,10 @@ import java.text.SimpleDateFormat;
          
                 // Totals section
                 out.println("<div class=\"totals-section\">");
-                out.printf("    <div>SubTotal: <span style=\"margin-left: 20px;\">$%.2f</span></div>%n", subTotal);
-                out.printf("    <div>Taxes @ 10%%: <span style=\"margin-left: 20px;\">$%.2f</span></div>%n", tax);
-                out.printf("    <div>Carrier (5%% Flat): <span style=\"margin-left: 20px;\">$%.2f</span></div>%n", carrier);
-                out.printf("    <div style=\"font-size: 18px; margin-top: 10px;\">Total: <span style=\"margin-left: 20px;\">$%.2f</span></div>%n", orderTotal);
+                out.printf("    <div>SubTotal: <span style=\"margin-left: 20px;\">%s</span></div>%n", currencyFormat.format(subTotal));
+                out.printf("    <div>Taxes @ 10%%: <span style=\"margin-left: 20px;\">%s</span></div>%n", currencyFormat.format(tax));
+                out.printf("    <div>Carrier (5%% Flat): <span style=\"margin-left: 20px;\">%s</span></div>%n", currencyFormat.format(carrier));
+                out.printf("    <div style=\"font-size: 18px; margin-top: 10px;\">Total: <span style=\"margin-left: 20px;\">%s</span></div>%n", currencyFormat.format(orderTotal));
                 out.println("</div>");
          
                 out.println("<a href=\"index\">Return to Shop</a>");
