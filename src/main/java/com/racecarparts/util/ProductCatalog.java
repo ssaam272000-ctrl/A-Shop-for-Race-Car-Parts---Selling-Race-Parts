@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.racecarparts.shop.RaceCarPart;
 
 import com.racecarparts.shop.EngineBlock;
 
@@ -25,10 +26,10 @@ public class ProductCatalog {
 	public static ProductCatalog getInstance() { // This is a method that will return the instance of the product catalog.
 		return INSTANCE; 
 	}
-	public static EngineBlock getPartbyID(String partID) { // This takes a string of what the part name is and defines an EngineBlock with that name within our inventory with that name.  If name doesn't exist, it returns a Null object.
+	public static RaceCarPart getPartbyID(String partID) { // This takes a string of what the part name is and defines an RaceCarPart with that name within our inventory with that name.  If name doesn't exist, it returns a Null object.
 		return products.get(partID);
 	}
-	public static List<EngineBlock> getAllProducts() { // This will return all Engine Blocks we defined above as an Array list.
+	public static List<RaceCarPart> getAllProducts() { // This will return all Engine Blocks we defined above as an Array list.
 		return new ArrayList<>(products.values());
 	}
 }

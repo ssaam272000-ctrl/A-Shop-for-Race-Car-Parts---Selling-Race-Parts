@@ -5,6 +5,8 @@ import java.io.IOException;
 import com.racecarparts.shop.EngineBlock;
 import com.racecarparts.shop.ShoppingCart;
 import com.racecarparts.util.ProductCatalog;
+import com.racecarparts.Factory.RaceCarPartFactory;
+import com.racecarparts.shop.RaceCarPart;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +40,8 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
 			session.setAttribute("cart", cart); // This stores the shopping cart we just created into our session, so you do not have to recreate this again.
 		}
 		
-		EngineBlock product = ProductCatalog.getInstance().getPartbyID(partId); // Applying SINGLETON here: This takes a string of what the part name is and defines an EngineBlock with that name within our inventory with that name.
+		 // product = ProductCatalog.getInstance().getPartbyID(partId); // Applying SINGLETON here: This takes a string of what the part name is and defines an EngineBlock with that name within our inventory with that name.
+		RaceCarPart product = RaceCarPartFactory.createPart(partId);
 		
 		if (product != null && quantity > 0) {
 			cart.addItem(product, quantity); // Adding item to cart

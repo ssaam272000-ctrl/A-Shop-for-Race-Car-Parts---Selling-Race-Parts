@@ -1,6 +1,8 @@
 package com.racecarparts.shop;
 
-public class EngineBlock {
+import com.racecarparts.shop.RaceCarPart;
+
+public class EngineBlock implements RaceCarPart { // This is a subclass of the RaceCarPart interface.
 	private double price;
 	private String engineName;
 	private int quantity;
@@ -19,10 +21,10 @@ public class EngineBlock {
 	public double getPrice() { // Getters
 		return price;
 	}
-	public String getEngineName() {
+	public String getEngineName() { 
 		return engineName;
 	}
-	public double getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 	public String getImageURL() {

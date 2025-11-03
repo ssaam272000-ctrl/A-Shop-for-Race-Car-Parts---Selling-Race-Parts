@@ -3,10 +3,10 @@ package com.racecarparts.shop;
 public class OrderLine {
 	
 	private int quantity;
-	private EngineBlock block;
+	private RaceCarPart block;
 	private double amount;
 	
-	public OrderLine(EngineBlock block, int quantity) { // Constructor
+	public OrderLine(RaceCarPart block, int quantity) { // Constructor
 		this.block = block;
 		this.quantity = quantity;
 		this.amount = block.getPrice(); // Set amount from the block's price
@@ -16,7 +16,7 @@ public class OrderLine {
 	public int getQuantity() { // Getters
 		return quantity;
 		}
-	public EngineBlock getEngineBlock() {
+	public RaceCarPart getEngineBlock() {
 		return block;
 		}
 	public double getAmount() {
@@ -29,7 +29,7 @@ public class OrderLine {
 		this.quantity = newQuantity;
 		}
 	
-	public void setEngineBlock(EngineBlock newBlock) {
+	public void setEngineBlock(RaceCarPart newBlock) {
 		this.block = newBlock;
 		}
 		

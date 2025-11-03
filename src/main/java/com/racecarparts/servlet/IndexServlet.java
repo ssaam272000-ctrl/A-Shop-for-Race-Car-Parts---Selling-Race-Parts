@@ -10,6 +10,7 @@ import java.util.Locale;
 import com.racecarparts.shop.EngineBlock;
 import com.racecarparts.shop.ShoppingCart;
 import com.racecarparts.util.ProductCatalog;
+import com.racecarparts.shop.RaceCarPart;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +37,7 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
                          cartItems = cart.getTotalItems(); // Calls the cartItems method
                                          
                  }
-                 List<EngineBlock> allProducts = ProductCatalog.getInstance().getAllProducts(); // Applying SINGLETON HERE Getting a list of all the products call the method that we just defined to get all products. It was defined in the Product Catalog class.
+                 List<RaceCarPart> allProducts = ProductCatalog.getInstance().getAllProducts(); // Applying SINGLETON HERE Getting a list of all the products call the method that we just defined to get all products. It was defined in the Product Catalog class.
 
                  // Generate HTML for the home page
                  PrintWriter out = response.getWriter();
@@ -131,7 +132,7 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
                  NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
                  
                  out.println("<ul>");
-                 for (EngineBlock part : allProducts) {
+                 for (RaceCarPart part : allProducts) {
                          out.println("    <li>");
                          out.printf("        <img src=\"images/%s\" alt=\"%s\" style=\"width:200px; border-radius:5px; margin-bottom:10px;\">%n", 
                                    part.getImageURL(), part.getDescription());

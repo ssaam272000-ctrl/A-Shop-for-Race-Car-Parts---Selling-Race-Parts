@@ -34,7 +34,7 @@ public class ShoppingCart {
 		double SubTotal = this.getSubTotal();
 		return SubTotal * shippingRate;
 	}
-	public void addItem(EngineBlock block, int quantity) { // Adding item
+	public void addItem(RaceCarPart block, int quantity) { // Adding item
 		for (OrderLine o : orderLine) { // Check each engine block in order line, check if we already have our item in our orderLine.
 			if (o.getEngineBlock().getEngineName().equals(block.getEngineName())) { // Used to update the quantity of an existing item in the orderLine.
 				int newQuantity = o.getQuantity() + quantity;  // variable
