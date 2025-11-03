@@ -38,7 +38,7 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
 			session.setAttribute("cart", cart); // This stores the shopping cart we just created into our session, so you do not have to recreate this again.
 		}
 		
-		EngineBlock product = ProductCatalog.getPartbyID(partId); // This takes a string of what the part name is and defines an EngineBlock with that name within our inventory with that name.
+		EngineBlock product = ProductCatalog.getInstance().getPartbyID(partId); // Applying SINGLETON here: This takes a string of what the part name is and defines an EngineBlock with that name within our inventory with that name.
 		
 		if (product != null && quantity > 0) {
 			cart.addItem(product, quantity); // Adding item to cart

@@ -36,7 +36,7 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
                          cartItems = cart.getTotalItems(); // Calls the cartItems method
                                          
                  }
-                 List<EngineBlock> allProducts = ProductCatalog.getAllProducts(); // Getting a list of all the products call the method that we just defined to get all products. It was defined in the Product Catalog class.
+                 List<EngineBlock> allProducts = ProductCatalog.getInstance().getAllProducts(); // Applying SINGLETON HERE Getting a list of all the products call the method that we just defined to get all products. It was defined in the Product Catalog class.
 
                  // Generate HTML for the home page
                  PrintWriter out = response.getWriter();
