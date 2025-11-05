@@ -1,9 +1,13 @@
 package com.racecarparts.decorator;
 import com.racecarparts.shop.RaceCarPart;
 
+
 public abstract class PartDecorator implements RaceCarPart { // Decorator wraps RaceCarParts in the Decorator, and delegates most of the delegation to the wrapped RaceCarPart.
   protected RaceCarPart wrappedPart; // This is the parts being decorated.
-
+  
+public PartDecorator(RaceCarPart part) { // The constructor takes a RaceCarPart and stores it in the wrappedPart field.
+    wrappedPart = part;
+}
   @Override
   public double getPrice() { // Getters
     return wrappedPart.getPrice();
