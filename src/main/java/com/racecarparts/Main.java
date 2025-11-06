@@ -36,6 +36,9 @@ public class Main {
                 Tomcat.addServlet(context, "CheckoutServlet", new com.racecarparts.servlet.CheckoutServlet()); // Mapping CheckoutServlet to handle order checkout
                 context.addServletMappingDecoded("/checkout", "CheckoutServlet");
                 
+                Tomcat.addServlet(context, "DemoServlet", new com.racecarparts.servlet.DemoServlet()); // Mapping DemoServlet to handle authentication and file upload demo
+                context.addServletMappingDecoded("/demo", "DemoServlet");
+                
                 // Add DefaultServlet to serve static resources (images, CSS, etc.)
                 Tomcat.addServlet(context, "default", "org.apache.catalina.servlets.DefaultServlet");
                 context.addServletMappingDecoded("/images/*", "default");
