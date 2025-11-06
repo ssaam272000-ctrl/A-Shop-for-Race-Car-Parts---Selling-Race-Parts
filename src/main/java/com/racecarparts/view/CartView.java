@@ -105,6 +105,7 @@ public class CartView extends BaseView { // This will give you the shopping cart
           html.append("            <td>").append(currencyFormat.format(part.getPrice())).append("</td>\n");
           html.append("            <td>\n");
           html.append("                <form action='/updateCart' method='post' style='display: inline;'>\n");
+          html.append("                    <input type='hidden' name='action' value='update'>\n");
           html.append("                    <input type='hidden' name='partId' value='").append(escapeHtml(part.getEngineName())).append("'>\n");
           html.append("                    <input type='number' name='quantity' value='").append(quantity).append("' min='0'>\n");
           html.append("            </td>\n");
@@ -112,7 +113,8 @@ public class CartView extends BaseView { // This will give you the shopping cart
           html.append("            <td>\n");
           html.append("                    <button type='submit' class='update-btn'>Update</button>\n");
           html.append("                </form>\n");
-          html.append("                <form action='/removeFromCart' method='post' style='display: inline;'>\n");
+          html.append("                <form action='/updateCart' method='post' style='display: inline;'>\n");
+          html.append("                    <input type='hidden' name='action' value='remove'>\n");
           html.append("                    <input type='hidden' name='partId' value='").append(escapeHtml(part.getEngineName())).append("'>\n");
           html.append("                    <button type='submit' class='remove-btn'>Remove</button>\n");
           html.append("                </form>\n");
