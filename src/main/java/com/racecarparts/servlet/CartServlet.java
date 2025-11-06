@@ -10,13 +10,11 @@ import com.racecarparts.shop.OrderLine;
 import com.racecarparts.shop.ShoppingCart;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/cart")
 public class CartServlet extends HttpServlet { // handle all the Post requests for when someone wants to add a part to our cart.
         
         @Override

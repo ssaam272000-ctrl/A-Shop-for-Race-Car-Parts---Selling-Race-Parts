@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import com.racecarparts.shop.ShoppingCart;
 import com.racecarparts.shop.OrderLine;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +18,7 @@ import java.util.Locale;
 import com.racecarparts.view.CheckoutView;
 import com.racecarparts.view.InvoiceView;
 
-
-@WebServlet("/checkout")
-        public class CheckoutServlet extends HttpServlet{ // handle all the Post requests for when someone wants to add a part to our cart.
+public class CheckoutServlet extends HttpServlet{ // handle all the Post requests for when someone wants to add a part to our cart.
 
         @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {      // Get the part from the request parameter

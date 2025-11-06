@@ -14,14 +14,12 @@ import com.racecarparts.util.ProductCatalog;
 import com.racecarparts.shop.RaceCarPart;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 
-@WebServlet({"", "/", "/index"})
 public class IndexServlet extends HttpServlet{ // handle all the web requests match the home page with index file, 
 
          @Override

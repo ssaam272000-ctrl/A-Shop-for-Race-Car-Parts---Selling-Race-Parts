@@ -10,46 +10,47 @@ import com.racecarparts.shop.RaceCarPart;
 import com.racecarparts.decorator.PerformanceTuningDecorator;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/addToCart")
 public class AddToCartServlet extends HttpServlet { // handle all the Post requests for when someone wants to add a part to our cart.
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // Get the part from the request parameter
-		String partId = request.getParameter("partId");
-		int quantity = 1;
-		
-		try {
-			String qtyParam = request.getParameter("quantity");
-			if (qtyParam != null && !qtyParam.isEmpty()) {
-				quantity = Integer.parseInt(qtyParam);
-			}
-		} catch (NumberFormatException e) {
-			quantity = 1;
-		}
-		
-		HttpSession session = request.getSession(); // Get HTTP Session to see if we have defined a shopping cart available.
-		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart"); // This is trying to see if a current shopping cart exists in our current session.
-		
-		if (cart == null) { // SINGLETON METHOD HERE; In order to avoid creating duplicate shopping carts, if a shopping cart (DOES NOT EXIST), then it creates a new one.
-			cart = new ShoppingCart();
-			session.setAttribute("cart", cart); // This stores the shopping cart we just created into our session, so you do not have to recreate this again.
-		}
-		
-		 // product = ProductCatalog.getInstance().getPartbyID(partId); // Applying SINGLETON here: This takes a string of what the part name is and defines an EngineBlock with that name within our inventory with that name.
-		RaceCarPart product = RaceCarPartFactory.createPart(partId);
-
-	RaceCarPart tunedPart = new PerformanceTuningDecorator(product);	// Applying DECORATOR here: This takes a string of what the part name is and defines an EngineBlock with that name within our inventory with that name.
-		
-				if (tunedPart != null && quantity > 0) {
-			cart.addItem(tunedPart, quantity); // Adding item to cart
-		}
-		
-		response.sendRedirect("index"); // Redirect back to the home page
-	}
+        
+        @Override
+        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // Get the part from the request parameter
+                String partId = request.getParameter("partId");
+                System.out.println("AddToCart - Received partId: " + partId);
+                int quantity = 1;
+                
+                try {
+                        String qtyParam = request.getParameter("quantity");
+                        if (qtyParam != null && !qtyParam.isEmpty()) {
+                                quantity = Integer.parseInt(qtyParam);
+                        }
+                } catch (NumberFormatException e) {
+                        quantity = 1;
+                }
+                
+                HttpSession session = request.getSession(); // Get HTTP Session to see if we have defined a shopping cart available.
+                ShoppingCart cart = (ShoppingCart) session.getAttribute("cart"); // This is trying to see if a current shopping cart exists in our current session.
+                
+                if (cart == null) { // SINGLETON METHOD HERE; In order to avoid creating duplicate shopping carts, if a shopping cart (DOES NOT EXIST), then it creates a new one.
+                        cart = new ShoppingCart();
+                        session.setAttribute("cart", cart); // This stores the shopping cart we just created into our session, so you do not have to recreate this again.
+                }
+                
+                RaceCarPart product = RaceCarPartFactory.createPart(partId);
+                System.out.println("AddToCart - Product from factory: " + (product != null ? product.getEngineName() : "NULL"));
+                
+                if (product != null && quantity > 0) {
+                        RaceCarPart tunedPart = new PerformanceTuningDecorator(product);
+                        cart.addItem(tunedPart, quantity); // Adding item to cart
+                        System.out.println("AddToCart - Item added to cart. Cart size: " + cart.getTotalItems());
+                } else {
+                        System.out.println("AddToCart - Product was null or quantity was 0");
+                }
+                
+                response.sendRedirect("index"); // Redirect back to the home page
+        }
 }
