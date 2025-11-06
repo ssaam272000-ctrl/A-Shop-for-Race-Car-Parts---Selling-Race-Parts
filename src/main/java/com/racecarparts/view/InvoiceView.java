@@ -35,7 +35,7 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
   private String generateCompanyInfo(String invoiceNumber, String invoiceDate) { // This generates the blue company info box at the top of the invoice number and the dates.
       StringBuilder html = new StringBuilder();
       html.append("<div style='background: linear-gradient(135deg, #1e90ff 0%, #00bfff 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; position: relative;'>\n");
-      html.append("    <h2 style='margin: 0 0 10px 0;'>Gabby-Hemanth-Saam LLC</h2>\n");
+      html.append("    <h2 style='margin: 0 0 10px 0;'>Hemanth-Saam LLC</h2>\n");
       html.append("    <p style='margin: 0;'>Race Car Parts Specialist</p>\n");
       html.append("    <div style='margin-top: 10px;'>\n");
       html.append("        <strong>Invoice #:</strong> ").append(escapeHtml(invoiceNumber)).append("<br>\n");
