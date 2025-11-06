@@ -20,7 +20,6 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
         @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException { // Get the part from the request parameter
                 String partId = request.getParameter("partId");
-                System.out.println("AddToCart - Received partId: " + partId);
                 int quantity = 1;
                 
                 try {
@@ -41,14 +40,10 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
                 }
                 
                 RaceCarPart product = RaceCarPartFactory.createPart(partId);
-                System.out.println("AddToCart - Product from factory: " + (product != null ? product.getEngineName() : "NULL"));
                 
                 if (product != null && quantity > 0) {
                         RaceCarPart tunedPart = new PerformanceTuningDecorator(product);
                         cart.addItem(tunedPart, quantity); // Adding item to cart
-                        System.out.println("AddToCart - Item added to cart. Cart size: " + cart.getTotalItems());
-                } else {
-                        System.out.println("AddToCart - Product was null or quantity was 0");
                 }
                 
                 response.sendRedirect("index"); // Redirect back to the home page

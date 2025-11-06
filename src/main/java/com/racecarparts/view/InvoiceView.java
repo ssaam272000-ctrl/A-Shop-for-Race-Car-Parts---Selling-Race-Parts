@@ -2,6 +2,8 @@ package com.racecarparts.view;
 
 import java.util.List;
 import com.racecarparts.shop.OrderLine;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class  InvoiceView extends BaseView { // The controller will receive the order information with the customer data and it retrieves the cart information from the session. It prepares the invoice data such as invoice number, calculates the tax, carrier, and total, and then it passes all this information to the view. The controller delegates to the invoice view with all the prepared data.
   public String render(String invoiceNumber, String invoiceDate, 
@@ -56,6 +58,7 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
   }
   private String generateOrderTable(List<OrderLine> orderLines) { // This gives you a table of all the order items by using each order in the order lines list.
       StringBuilder html = new StringBuilder();
+      NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
       html.append("<style>\n");
       html.append("    .invoice-table {\n");
@@ -95,9 +98,9 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
           html.append("        <tr>\n");
           html.append("            <td>").append(escapeHtml(line.getEngineBlock().getEngineName())).append("</td>\n");
           html.append("            <td>").append(escapeHtml(line.getEngineBlock().getDescription())).append("</td>\n");
-          html.append("            <td>$").append(String.format("%.2f", line.getEngineBlock().getPrice())).append("</td>\n");
+          html.append("            <td>").append(currencyFormat.format(line.getEngineBlock().getPrice())).append("</td>\n");
           html.append("            <td>").append(line.getQuantity()).append("</td>\n");
-          html.append("            <td>$").append(String.format("%.2f", line.getOrderTotal())).append("</td>\n");
+          html.append("            <td>").append(currencyFormat.format(line.getOrderTotal())).append("</td>\n");
           html.append("        </tr>\n");
       }
 
@@ -108,11 +111,12 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
   }
   private String generateTotals(double subtotal, double tax, double carrier, double total) { // This generates the totals box with the subtotal, tax, carrier, and finaltotal.
       StringBuilder html = new StringBuilder();
+      NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
       html.append("<div style='background-color: white; padding: 20px; border-radius: 10px; max-width: 400px; margin-left: auto;'>\n");
-      html.append("    <div>SubTotal: <span style='margin-left: 20px;'>$").append(String.format("%.2f", subtotal)).append("</span></div>\n");
-      html.append("    <div>Taxes @ 10%: <span style='margin-left: 20px;'>$").append(String.format("%.2f", tax)).append("</span></div>\n");
-      html.append("    <div>Carrier (5% Flat): <span style='margin-left: 20px;'>$").append(String.format("%.2f", carrier)).append("</span></div>\n");
-      html.append("    <div style='font-size: 18px; margin-top: 10px;'>Total: <span style='margin-left: 20px;'>$").append(String.format("%.2f", total)).append("</span></div>\n");
+      html.append("    <div>SubTotal: <span style='margin-left: 20px;'>").append(currencyFormat.format(subtotal)).append("</span></div>\n");
+      html.append("    <div>Taxes @ 10%: <span style='margin-left: 20px;'>").append(currencyFormat.format(tax)).append("</span></div>\n");
+      html.append("    <div>Carrier (5% Flat): <span style='margin-left: 20px;'>").append(currencyFormat.format(carrier)).append("</span></div>\n");
+      html.append("    <div style='font-size: 18px; margin-top: 10px;'>Total: <span style='margin-left: 20px;'>").append(currencyFormat.format(total)).append("</span></div>\n");
       html.append("</div>\n");
       return html.toString();
   }

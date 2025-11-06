@@ -1,5 +1,8 @@
 package com.racecarparts.view;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class CheckoutView extends BaseView { // This will give you the checkout form.
   public String render(double cartTotal) {
       StringBuilder html = new StringBuilder();
@@ -21,6 +24,7 @@ public class CheckoutView extends BaseView { // This will give you the checkout 
   }
   private String generateCheckoutForm(double cartTotal) { // This will generate the checkout form with customer information and order total.
       StringBuilder html = new StringBuilder();
+      NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
       html.append("<style>\n");
       html.append("    .checkout-container {\n");
@@ -79,7 +83,7 @@ public class CheckoutView extends BaseView { // This will give you the checkout 
       html.append("    <h2 style='color: #1e90ff; margin-top: 0;'>Customer Information</h2>\n");
 
       html.append("    <div class='total-display'>\n");
-      html.append("        <h3>Order Total: $").append(String.format("%.2f", cartTotal)).append("</h3>\n");
+      html.append("        <h3>Order Total: ").append(currencyFormat.format(cartTotal)).append("</h3>\n");
       html.append("    </div>\n");
 
       html.append("    <form action='/checkout' method='post'>\n");
