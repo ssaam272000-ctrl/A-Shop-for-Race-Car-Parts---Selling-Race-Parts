@@ -8,13 +8,6 @@ public interface RaceCarPart { // This interface will define the methods that al
   String getDescription();
   
   void setQuantity(int newQuantity); // Setters
-  
-  
-
-
-
-
-
-  
+   
 }
   

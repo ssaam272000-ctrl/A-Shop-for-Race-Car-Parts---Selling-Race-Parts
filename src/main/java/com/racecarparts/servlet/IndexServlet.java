@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.text.NumberFormat;
 import java.util.Locale;
+import com.racecarparts.view.IndexView;
 
 import com.racecarparts.shop.EngineBlock;
 import com.racecarparts.shop.ShoppingCart;
@@ -38,121 +39,13 @@ public class IndexServlet extends HttpServlet{ // handle all the web requests ma
                                          
                  }
                  List<RaceCarPart> allProducts = ProductCatalog.getInstance().getAllProducts(); // Applying SINGLETON HERE Getting a list of all the products call the method that we just defined to get all products. It was defined in the Product Catalog class.
+                                 IndexView view = new IndexView(); // This will delegate the HTML generation to the view.
+                                 String html = view.render(allProducts, cartItems); // This will render the HTML for the homepage.
+                                 
 
-                 // Generate HTML for the home page
-                 PrintWriter out = response.getWriter();
-                 out.println("<!DOCTYPE html>"); 
-                 out.println("<html>");
-                 out.println("<head>");
-                 out.println("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">");
-                 out.println("<title>A Shop for Race Car Parts</title>");
-                 out.println("<style>");
-                 out.println("body {");
-                 out.println("    background-color: hsl(89, 43%, 51%);");
-                 out.println("    font-family: Arial, sans-serif;");
-                 out.println("    padding: 20px;");
-                 out.println("}");
-                 out.println("h1 {");
-                 out.println("    background-color: hsl(185, 65%, 70%);");
-                 out.println("    padding: 15px;");
-                 out.println("    border-radius: 5px;");
-                 out.println("}");
-                 out.println("h2 {");
-                 out.println("    background-color: DodgerBlue;");
-                 out.println("    color: white;");
-                 out.println("    padding: 10px;");
-                 out.println("    border-radius: 5px;");
-                 out.println("}");
-                 out.println("ul {");
-                 out.println("    list-style-type: none;");
-                 out.println("    padding: 0;");
-                                out.println(" display: grid;");
-                                out.println(" grid-template-columns: repeat(3, 1fr);");
-                                out.println(" gap: 15px;");
-                 out.println("}");
-                 out.println("li {");
-                 out.println("    background-color: white;");
-                 out.println("    margin: 10px 0;");
-                 out.println("    padding: 15px;");
-                 out.println("    border-radius: 5px;");
-                 out.println("    box-shadow: 0 2px 4px rgba(0,0,0,0.1);");
-
-                                
-                out.println("}");
-                 out.println(".price {");
-                 out.println("    color: #e91e63;");
-                 out.println("    font-size: 24px;");
-                 out.println("    font-weight: bold;");
-                 out.println("}");
-                 out.println(".part-info {");
-                 out.println("    margin-top: 10px;");
-                 out.println("    color: #333;");
-                 out.println("}");
-                 out.println("button {");
-                 out.println("    background-color: #00bcd4;");
-                 out.println("    color: white;");
-                 out.println("    border: none;");
-                 out.println("    padding: 10px 20px;");
-                 out.println("    border-radius: 5px;");
-                 out.println("    cursor: pointer;");
-                 out.println("    font-size: 16px;");
-                 out.println("}");
-                 out.println("button:hover {");
-                 out.println("    background-color: #0097a7;");
-                 out.println("}");
-                 out.println(".cart-link {");
-                 out.println("    float: right;");
-                 out.println("    background-color: white;");
-                 out.println("    color: #0097a7;");
-                 out.println("    padding: 10px 20px;");
-                 out.println("    text-decoration: none;");
-                 out.println("    border-radius: 5px;");
-                 out.println("    font-weight: bold;");
-                 out.println("}");
-                 out.println(".date {");
-                 out.println("    background-color: rgba(255,255,255,0.7);");
-                 out.println("    padding: 5px 10px;");
-                 out.println("    border-radius: 3px;");
-                 out.println("    display: inline-block;");
-                                out.println("}");
-                                out.println(".sprint-car-image {");
-                                out.println("    display: block;");
-                                out.println("    margin: 20px auto;"); // Added 20 pixels of margin and the auto centers it left to right.
-                                // out.println("    max-width: 400px;");
-                                out.println("    width: 100%;");
-                 out.println("}");
-                 out.println("</style>");
-                 out.println("</head>");
-                 out.println("<body>");
-                 
-                 out.println("<h1>A Shop for Race Car Parts <a href=\"cart\" class=\"cart-link\">View Cart (" + cartItems + ")</a></h1>");
-                 out.println("<h2>Hemanth-Saam LLC</h2>");
-                 out.println("<p class=\"date\">Date: " + new Date() + "</p>");
-                 
-                 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
-                 
-                 out.println("<ul>");
-                 for (RaceCarPart part : allProducts) {
-                         out.println("    <li>");
-                         out.printf("        <img src=\"images/%s\" alt=\"%s\" style=\"width:200px; border-radius:5px; margin-bottom:10px;\">%n", 
-                                   part.getImageURL(), part.getDescription());
-
-                         
-                         out.printf("        <div class=\"price\">%s</div>%n", currencyFormat.format(part.getPrice()));
-                         out.printf("        <div class=\"part-info\"><strong>%s</strong> - %s</div>%n", 
-                                   part.getEngineName(), part.getDescription());
-                         out.println("        <form action=\"addToCart\" method=\"post\" style=\"margin-top: 10px;\">");
-                         out.printf("            <input type=\"hidden\" name=\"partId\" value=\"%s\">%n", part.getEngineName());
-                         out.println("            <input type=\"hidden\" name=\"quantity\" value=\"1\">");
-                         out.println("            <button type=\"submit\">Add to Cart</button>");
-                         out.println("        </form>");
-                         out.println("    </li>");
-                         
-                 }
-                 out.println("</ul>");
-                 // out.println("<img src=\"/images/sprintcar.jpg\" alt=\"Sprint Car\" class=\"sprint-car-image\">");
-                 out.println("<img src=\"/images/skagit-speedway.gif\" alt=\"Sprint Car\" class=\"sprint-car-image\">");
-                 out.println("</body>");
-                 out.println("</html>");
+                    PrintWriter out = response.getWriter();
+                    out.println(html); //This sends the HTML response to the client.
+                                     
          }
+        
 }
