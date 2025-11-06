@@ -18,10 +18,7 @@ public class IndexView extends BaseView { // This gives you the complete homepag
 
       html.append("<div class='header'>\n");
       html.append("    <h1>A Shop for Race Car Parts</h1>\n");
-      html.append("    <div>\n");
-      html.append("        <a href='/demo' class='cart-button' style='margin-right: 10px;'>Demo</a>\n");
-      html.append("        <a href='/cart' class='cart-button'>View Cart (").append(cartItemCount).append(")</a>\n");
-      html.append("    </div>\n");
+      html.append("    <a href='/cart' class='cart-button'>View Cart (").append(cartItemCount).append(")</a>\n");
       html.append("</div>\n");
 
       html.append("<div class='subheader'>Hemanth-Saam LLC</div>\n");
