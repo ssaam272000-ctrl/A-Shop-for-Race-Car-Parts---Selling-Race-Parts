@@ -30,8 +30,9 @@ public class IndexView extends BaseView { // This gives you the complete homepag
 
       html.append(generateProductGrid(products, currencyFormat));
 
-      html.append("<div style='text-align: center; margin-top: 40px;'>\n");
-      html.append("    <img src='/images/sprintcar.jpg' alt='Sprint Car' style='max-width: 600px; border-radius: 10px;'>\n");
+      html.append("<div style='width: 100%; margin-top: 40px;'>\n");
+      html.append("    <img src='/images/skagit-speedway.gif' alt='Sprint Car' style='width: 100%; height: auto; border-radius: 0;'>\n");
+      html.append("</div>\n");
       html.append("</div>\n");
 
       html.append(generateFooter());
