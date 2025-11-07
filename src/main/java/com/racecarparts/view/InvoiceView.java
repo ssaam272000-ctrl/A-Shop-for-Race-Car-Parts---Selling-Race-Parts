@@ -14,7 +14,7 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
           html.append(generateHeader("Invoice - " + invoiceNumber));
           
           html.append("<style>\n");
-          html.append("    body { background-color: #f5f5f5 !important; }\n");
+          html.append("    body { background-color: #B8DDE8 !important; }\n");
           html.append("</style>\n");
           
           html.append("<div style='max-width: 1000px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1);'>\n");
@@ -69,7 +69,7 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
       
       html.append("<div style='display: flex; justify-content: space-between; margin-bottom: 30px; gap: 20px;'>\n");
       
-      html.append("  <div style='flex: 1; padding: 15px; background-color: #e8f4e8; border: 1px solid #ccc; border-radius: 5px;'>\n");
+      html.append("  <div style='flex: 1; padding: 15px; background-color: #D4EBF1; border: 1px solid #999; border-radius: 5px;'>\n");
       html.append("    <h3 style='margin: 0 0 10px 0; color: #333; font-size: 14px; font-weight: bold;'>Bill To:</h3>\n");
       html.append("    <div style='color: #333; line-height: 1.6; font-size: 14px;'>\n");
       html.append("      <strong>").append(escapeHtml(customerName)).append("</strong><br>\n");
@@ -80,7 +80,7 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
       html.append("    </div>\n");
       html.append("  </div>\n");
       
-      html.append("  <div style='flex: 1; padding: 15px; background-color: #e8f4e8; border: 1px solid #ccc; border-radius: 5px;'>\n");
+      html.append("  <div style='flex: 1; padding: 15px; background-color: #D4EBF1; border: 1px solid #999; border-radius: 5px;'>\n");
       html.append("    <h3 style='margin: 0 0 10px 0; color: #333; font-size: 14px; font-weight: bold;'>Ship To:</h3>\n");
       html.append("    <div style='color: #333; line-height: 1.6; font-size: 14px;'>\n");
       html.append("      <strong>").append(escapeHtml(customerName)).append("</strong><br>\n");
@@ -152,15 +152,15 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
       NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
       
       html.append("<div style='max-width: 350px; margin-left: auto; margin-top: 20px;'>\n");
-      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #e8f4e8;'>\n");
+      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #D4EBF1;'>\n");
       html.append("        <span style='color: #333; font-size: 14px;'>SubTotal:</span>\n");
       html.append("        <span style='color: #333; font-size: 14px;'>").append(currencyFormat.format(subtotal)).append("</span>\n");
       html.append("    </div>\n");
-      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #e8f4e8; margin-top: 2px;'>\n");
+      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #D4EBF1; margin-top: 2px;'>\n");
       html.append("        <span style='color: #333; font-size: 14px;'>Deposit (8% Dep.):</span>\n");
       html.append("        <span style='color: #333; font-size: 14px;'>").append(currencyFormat.format(tax)).append("</span>\n");
       html.append("    </div>\n");
-      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #e8f4e8; margin-top: 2px;'>\n");
+      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #D4EBF1; margin-top: 2px;'>\n");
       html.append("        <span style='color: #333; font-size: 14px;'>Carrier (Tin Env.):</span>\n");
       html.append("        <span style='color: #333; font-size: 14px;'>").append(currencyFormat.format(carrier)).append("</span>\n");
       html.append("    </div>\n");
