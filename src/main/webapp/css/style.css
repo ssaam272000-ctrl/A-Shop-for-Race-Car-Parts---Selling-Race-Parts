@@ -167,7 +167,7 @@ body {
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .footer-content {
         flex-direction: column;
     }
