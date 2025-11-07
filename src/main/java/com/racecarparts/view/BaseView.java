@@ -11,7 +11,7 @@ public class BaseView { // Used to provide the HTML generation utility for all t
       html.append("    <title>").append(title).append("</title>\n");
       html.append("    <style>\n");
       html.append("        body { \n");
-      html.append("            background-color: hsl(89, 43%, 51%); \n");
+      html.append("            background-color: #B6EFE2; \n");
       html.append("            font-family: Arial, sans-serif; \n");
       html.append("            margin: 0; \n");
       html.append("            padding: 20px; \n");
