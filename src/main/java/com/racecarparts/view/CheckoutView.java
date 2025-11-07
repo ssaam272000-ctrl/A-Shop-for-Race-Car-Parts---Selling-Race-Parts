@@ -95,7 +95,7 @@ public class CheckoutView extends BaseView { // This will give you the checkout 
 
       html.append("        <div class='form-group'>\n");
       html.append("            <label for='billingAddress'>Billing Address *</label>\n");
-      html.append("            <textarea id='billingAddress' name='billingAddress' required placeholder='Enter your complete billing address...'></textarea>\n");
+      html.append("            <input type='text' id='billingAddress' name='billingAddress' required>\n");
       html.append("        </div>\n");
 
       html.append("        <div class='form-group'>\n");

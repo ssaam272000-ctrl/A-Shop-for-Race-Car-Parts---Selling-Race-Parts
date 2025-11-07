@@ -12,132 +12,94 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
                           double subtotal, double tax, double carrier, double total) {
           StringBuilder html = new StringBuilder();
           html.append(generateHeader("Invoice - " + invoiceNumber));
-          
-          html.append("<style>\n");
-          html.append("    body { background-color: #B8DDE8 !important; }\n");
-          html.append("</style>\n");
-          
-          html.append("<div style='max-width: 1000px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1);'>\n");
-          
-          html.append(generateCompanyHeader(invoiceNumber, invoiceDate));
-          html.append(generateCustomerInfo(customerName, billingAddress, customerNotes));
-          html.append(generateOrderTable(orderLines));
-          html.append(generateTotals(subtotal, tax, carrier, total));
-          
-          html.append("<div style='text-align: center; margin-top: 40px;'>\n");
-          html.append("    <a href='/' class='cart-button'>Return to Shop</a>\n");
+  // Invoice header
+          html.append("<div style='text-align: center; margin-bottom: 30px;'>\n");
+          html.append("    <h1 style='color: #1e90ff; margin: 0;'>INVOICE</h1>\n");
           html.append("</div>\n");
-          
+          // Company info box
+          html.append(generateCompanyInfo(invoiceNumber, invoiceDate));
+          // Customer info
+          html.append(generateCustomerInfo(customerName, billingAddress, customerNotes));
+          // Order items table
+          html.append(generateOrderTable(orderLines));
+  // Totals
+          html.append(generateTotals(subtotal, tax, carrier, total));
+          // Thank you message and home link
+          html.append("<div style='text-align: center; margin-top: 40px;'>\n");
+          html.append("    <h2 style='color: #1e90ff;'>Thank you for your order!</h2>\n");
+          html.append("    <a href='/' class='cart-button'>Return to Shop</a>\n");
           html.append("</div>\n");
           html.append(generateFooter());
         return html.toString();
       }
-  private String generateCompanyHeader(String invoiceNumber, String invoiceDate) {
+  private String generateCompanyInfo(String invoiceNumber, String invoiceDate) { // This generates the blue company info box at the top of the invoice number and the dates.
       StringBuilder html = new StringBuilder();
-      
-      html.append("<div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px;'>\n");
-      
-      html.append("  <div style='flex: 1;'>\n");
-      html.append("    <div style='display: flex; align-items: center; margin-bottom: 15px;'>\n");
-      html.append("      <img src='/images/racingengine.jpg' alt='Logo' style='width: 80px; height: 80px; object-fit: cover; margin-right: 15px; border-radius: 5px;'>\n");
-      html.append("      <h1 style='margin: 0; color: #333; font-size: 24px;'>A Shop for Race Car Parts</h1>\n");
+      html.append("<div style='background: linear-gradient(135deg, #1e90ff 0%, #00bfff 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; position: relative;'>\n");
+      html.append("    <h2 style='margin: 0 0 10px 0;'>Hemanth-Saam LLC</h2>\n");
+      html.append("    <p style='margin: 0;'>Race Car Parts Specialist</p>\n");
+      html.append("    <div style='margin-top: 10px;'>\n");
+      html.append("        <strong>Invoice #:</strong> ").append(escapeHtml(invoiceNumber)).append("<br>\n");
+      html.append("        <strong>Date:</strong> ").append(escapeHtml(invoiceDate)).append("\n");
       html.append("    </div>\n");
-      html.append("    <div style='color: #666; line-height: 1.6;'>\n");
-      html.append("      <strong>Casey Henderson</strong><br>\n");
-      html.append("      323 Main Rd<br>\n");
-      html.append("      Babby PA 15001<br>\n");
-      html.append("      1-888-555-3335\n");
-      html.append("    </div>\n");
-      html.append("  </div>\n");
-      
-      html.append("  <div style='background: #A7D8E8; padding: 20px; border-radius: 5px; min-width: 250px;'>\n");
-      html.append("    <h2 style='margin: 0 0 15px 0; color: #333; font-size: 20px; text-align: center;'>INVOICE</h2>\n");
-      html.append("    <div style='color: #333;'>\n");
-      html.append("      <strong>Invoice Date:</strong><br>\n");
-      html.append("      <span style='margin-left: 10px;'>").append(escapeHtml(invoiceDate)).append("</span><br><br>\n");
-      html.append("      <strong>Invoice #:</strong><br>\n");
-      html.append("      <span style='margin-left: 10px;'>").append(escapeHtml(invoiceNumber)).append("</span>\n");
-      html.append("    </div>\n");
-      html.append("  </div>\n");
-      
       html.append("</div>\n");
-      
       return html.toString();
   }
-  private String generateCustomerInfo(String customerName, String billingAddress, String customerNotes) {
+  private String generateCustomerInfo(String customerName, String billingAddress, String customerNotes) { // This generates the customer information with their name and billing address. If there are any notes, it will also display that.
       StringBuilder html = new StringBuilder();
-      
-      html.append("<div style='display: flex; justify-content: space-between; margin-bottom: 30px; gap: 20px;'>\n");
-      
-      html.append("  <div style='flex: 1; padding: 15px; background-color: #D4EBF1; border: 1px solid #999; border-radius: 5px;'>\n");
-      html.append("    <h3 style='margin: 0 0 10px 0; color: #333; font-size: 14px; font-weight: bold;'>Bill To:</h3>\n");
-      html.append("    <div style='color: #333; line-height: 1.6; font-size: 14px;'>\n");
-      html.append("      <strong>").append(escapeHtml(customerName)).append("</strong><br>\n");
-      html.append("      ").append(escapeHtml(billingAddress)).append("\n");
+      html.append("<div style='background-color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;'>\n");
+      html.append("    <h3 style='color: #1e90ff; margin-top: 0;'>Customer Information</h3>\n");
+      html.append("    <p><strong>Name:</strong> ").append(escapeHtml(customerName)).append("</p>\n");
+      html.append("    <p><strong>Billing Address:</strong> ").append(escapeHtml(billingAddress)).append("</p>\n");
       if (customerNotes != null && !customerNotes.trim().isEmpty()) {
-          html.append("      <br><br><em>Notes: ").append(escapeHtml(customerNotes)).append("</em>\n");
+          html.append("    <p><strong>Notes:</strong> ").append(escapeHtml(customerNotes)).append("</p>\n");
       }
-      html.append("    </div>\n");
-      html.append("  </div>\n");
-      
-      html.append("  <div style='flex: 1; padding: 15px; background-color: #D4EBF1; border: 1px solid #999; border-radius: 5px;'>\n");
-      html.append("    <h3 style='margin: 0 0 10px 0; color: #333; font-size: 14px; font-weight: bold;'>Ship To:</h3>\n");
-      html.append("    <div style='color: #333; line-height: 1.6; font-size: 14px;'>\n");
-      html.append("      <strong>").append(escapeHtml(customerName)).append("</strong><br>\n");
-      html.append("      ").append(escapeHtml(billingAddress)).append("\n");
-      html.append("    </div>\n");
-      html.append("  </div>\n");
-      
       html.append("</div>\n");
-      
       return html.toString();
   }
-  private String generateOrderTable(List<OrderLine> orderLines) {
+  private String generateOrderTable(List<OrderLine> orderLines) { // This gives you a table of all the order items by using each order in the order lines list.
       StringBuilder html = new StringBuilder();
       NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
       html.append("<style>\n");
+      html.append("    .invoice-table {\n");
+      html.append("        background-color: white;\n");
+      html.append("        padding: 20px;\n");
+      html.append("        border-radius: 10px;\n");
+      html.append("        margin-bottom: 20px;\n");
+      html.append("    }\n");
       html.append("    .invoice-table table {\n");
       html.append("        width: 100%;\n");
       html.append("        border-collapse: collapse;\n");
-      html.append("        margin-bottom: 20px;\n");
-      html.append("        background-color: white;\n");
       html.append("    }\n");
       html.append("    .invoice-table th {\n");
-      html.append("        background-color: #B8DDE8;\n");
-      html.append("        color: #333;\n");
-      html.append("        padding: 10px;\n");
+      html.append("        background-color: #1e90ff;\n");
+      html.append("        color: white;\n");
+      html.append("        padding: 12px;\n");
       html.append("        text-align: left;\n");
-      html.append("        font-weight: bold;\n");
-      html.append("        border: 1px solid #999;\n");
-      html.append("        font-size: 14px;\n");
       html.append("    }\n");
       html.append("    .invoice-table td {\n");
-      html.append("        padding: 10px;\n");
-      html.append("        border: 1px solid #999;\n");
-      html.append("        color: #333;\n");
-      html.append("        background-color: white;\n");
-      html.append("        font-size: 14px;\n");
+      html.append("        padding: 10px 12px;\n");
+      html.append("        border-bottom: 1px solid #ddd;\n");
       html.append("    }\n");
       html.append("</style>\n");
 
       html.append("<div class='invoice-table'>\n");
-      html.append("    <p style='margin-bottom: 10px; color: #333;'><strong>This order is authorized to be processed on: ").append(java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("MMMM dd, yyyy"))).append("</strong></p>\n");
+      html.append("    <h3 style='color: #1e90ff; margin-top: 0;'>Order Details</h3>\n");
       html.append("    <table>\n");
       html.append("        <tr>\n");
-      html.append("            <th>QTY</th>\n");
-      html.append("            <th>Part Code</th>\n");
-      html.append("            <th>Part Description</th>\n");
-      html.append("            <th>Amount Paid</th>\n");
-      html.append("            <th>Total Cost</th>\n");
+      html.append("            <th>Part ID</th>\n");
+      html.append("            <th>Description</th>\n");
+      html.append("            <th>Unit Price</th>\n");
+      html.append("            <th>Quantity</th>\n");
+      html.append("            <th>Total</th>\n");
       html.append("        </tr>\n");
 
-      for (OrderLine line : orderLines) {
+      for (OrderLine line : orderLines) { // This for loop will generate each row of the order table. It will use the order lines list to get each order and then it will get the part information and the quantity and the total for that order.
           html.append("        <tr>\n");
-          html.append("            <td>").append(line.getQuantity()).append("</td>\n");
           html.append("            <td>").append(escapeHtml(line.getEngineBlock().getEngineName())).append("</td>\n");
           html.append("            <td>").append(escapeHtml(line.getEngineBlock().getDescription())).append("</td>\n");
           html.append("            <td>").append(currencyFormat.format(line.getEngineBlock().getPrice())).append("</td>\n");
+          html.append("            <td>").append(line.getQuantity()).append("</td>\n");
           html.append("            <td>").append(currencyFormat.format(line.getOrderTotal())).append("</td>\n");
           html.append("        </tr>\n");
       }
@@ -147,29 +109,15 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
 
       return html.toString();
   }
-  private String generateTotals(double subtotal, double tax, double carrier, double total) {
+  private String generateTotals(double subtotal, double tax, double carrier, double total) { // This generates the totals box with the subtotal, tax, carrier, and finaltotal.
       StringBuilder html = new StringBuilder();
       NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
-      
-      html.append("<div style='max-width: 350px; margin-left: auto; margin-top: 20px;'>\n");
-      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #D4EBF1;'>\n");
-      html.append("        <span style='color: #333; font-size: 14px;'>SubTotal:</span>\n");
-      html.append("        <span style='color: #333; font-size: 14px;'>").append(currencyFormat.format(subtotal)).append("</span>\n");
-      html.append("    </div>\n");
-      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #D4EBF1; margin-top: 2px;'>\n");
-      html.append("        <span style='color: #333; font-size: 14px;'>Deposit (8% Dep.):</span>\n");
-      html.append("        <span style='color: #333; font-size: 14px;'>").append(currencyFormat.format(tax)).append("</span>\n");
-      html.append("    </div>\n");
-      html.append("    <div style='display: flex; justify-content: space-between; padding: 8px 12px; background-color: #D4EBF1; margin-top: 2px;'>\n");
-      html.append("        <span style='color: #333; font-size: 14px;'>Carrier (Tin Env.):</span>\n");
-      html.append("        <span style='color: #333; font-size: 14px;'>").append(currencyFormat.format(carrier)).append("</span>\n");
-      html.append("    </div>\n");
-      html.append("    <div style='display: flex; justify-content: space-between; padding: 12px; font-size: 16px; font-weight: bold; background-color: #B8DDE8; margin-top: 10px;'>\n");
-      html.append("        <span style='color: #333;'>Total:</span>\n");
-      html.append("        <span style='color: #333;'>").append(currencyFormat.format(total)).append("</span>\n");
-      html.append("    </div>\n");
+      html.append("<div style='background-color: white; padding: 20px; border-radius: 10px; max-width: 400px; margin-left: auto;'>\n");
+      html.append("    <div>SubTotal: <span style='margin-left: 20px;'>").append(currencyFormat.format(subtotal)).append("</span></div>\n");
+      html.append("    <div>Taxes @ 10%: <span style='margin-left: 20px;'>").append(currencyFormat.format(tax)).append("</span></div>\n");
+      html.append("    <div>Carrier (5% Flat): <span style='margin-left: 20px;'>").append(currencyFormat.format(carrier)).append("</span></div>\n");
+      html.append("    <div style='font-size: 18px; margin-top: 10px;'>Total: <span style='margin-left: 20px;'>").append(currencyFormat.format(total)).append("</span></div>\n");
       html.append("</div>\n");
-      
       return html.toString();
   }
   
