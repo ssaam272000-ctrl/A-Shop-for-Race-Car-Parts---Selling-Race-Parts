@@ -98,6 +98,17 @@ Access the application at the Replit preview URL on port 5000.
 
 ## Recent Changes
 
+### November 07, 2025
+- **Invoice Redesign**:
+  - Completely redesigned invoice layout to match client mockup
+  - Added company branding header with "A Shop for Race Car Parts" and logo
+  - Included Casey Henderson contact information (address, phone)
+  - Created side-by-side "Bill To" and "Ship To" sections
+  - Reordered table columns to: QTY, Part Code, Part Description, Amount Paid, Total Cost
+  - Updated totals section labels to "Deposit (8% Dep.)" and "Carrier (Tin Env.)"
+  - Applied light blue/cyan color scheme (#A7D8E8) throughout invoice
+  - Added authorization date message above order table
+
 ### October 27, 2025
 - **Initial Implementation**:
   - Created complete Maven project structure
