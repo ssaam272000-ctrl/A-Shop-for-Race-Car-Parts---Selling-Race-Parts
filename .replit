@@ -1,4 +1,4 @@
-modules = ["java-graalvm22.3", "web"]
+modules = ["java-graalvm22.3", "web", "postgresql-16"]
 [agent]
 expertMode = true
 
@@ -18,29 +18,17 @@ args = "Server"
 name = "Server"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "mvn compile exec:java -Dexec.mainClass=\"com.racecarparts.Main\""
-waitForPort = 5000
-
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "bash -c \"cd /home/runner/workspace && mvn package -DskipTests -q && java -cp 'target/classes:target/lib/*' com.racecarparts.Main\""
+waitForPort = 5000
 
 [[ports]]
 localPort = 5000
 externalPort = 80
-
-[[ports]]
-localPort = 38223
-externalPort = 3000
-
-[[ports]]
-localPort = 41579
-externalPort = 3002
-
-[[ports]]
-localPort = 41817
-externalPort = 3001
 
 [nix]
 channel = "stable-25_05"

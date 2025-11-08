@@ -5,10 +5,13 @@ import java.io.File;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
+import com.racecarparts.util.DatabaseInitializer;
 
 public class Main {
 
         public static void main(String[] args) throws LifecycleException {
+                DatabaseInitializer.initializeDatabase();
+                
                 String port = "5000";
                 Tomcat tomcat = new Tomcat();
                 tomcat.setPort(Integer.parseInt(port));

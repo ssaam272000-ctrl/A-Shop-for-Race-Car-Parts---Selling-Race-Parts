@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import com.racecarparts.shop.ShoppingCart;
 import com.racecarparts.shop.OrderLine;
+import com.racecarparts.dao.OrderDAO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import java.util.Random;
 import java.text.SimpleDateFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.sql.SQLException;
 import com.racecarparts.view.CheckoutView;
 import com.racecarparts.view.InvoiceView;
 
@@ -44,8 +46,18 @@ public class CheckoutServlet extends HttpServlet{ // handle all the Post request
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy"); // This will give you the date in the format of Month Day, Year.
                 String invoiceDate = dateFormat.format(new java.util.Date()); // This will give you the current date in the format of Month Day, Year.
                 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US); // This will format the prices with commas in the thousands place.
-                // Generate a random order number       
-                int invoiceNumber = new Random().nextInt(10000000); // This will generate a random number for the invoice number.
+                
+                int invoiceNumber = -1;
+                try {
+                    OrderDAO orderDAO = new OrderDAO();
+                    invoiceNumber = orderDAO.saveOrder(customerName, billingAddress, customerNotes, orderLines, orderTotal);
+                    System.out.println("Order saved to database with ID: " + invoiceNumber);
+                } catch (SQLException e) {
+                    System.err.println("Error saving order to database: " + e.getMessage());
+                    e.printStackTrace();
+                    invoiceNumber = new Random().nextInt(10000000);
+                }
+                
                 String invoiceNumberString = String.format("%07d", invoiceNumber); // This will format the invoice number to be 7 digits long.
                         
                 cart.clear(); // Clears your Cart to return an empty cart
