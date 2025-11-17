@@ -39,7 +39,7 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
                         session.setAttribute("cart", cart); // This stores the shopping cart we just created into our session, so you do not have to recreate this again.
                 }
                 
-                RaceCarPart product = RaceCarPartFactory.createPart(partId);
+                RaceCarPart product = RaceCarPartFactory.createPart(partId);  // FACTORY METHOD HERE; This is creating a new part based on the part ID that we just got from the request.
                 
                 if (product != null && quantity > 0) {
                         RaceCarPart tunedPart = new PerformanceTuningDecorator(product);

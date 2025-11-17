@@ -6,8 +6,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class  InvoiceView extends BaseView { // The controller will receive the order information with the customer data and it retrieves the cart information from the session. It prepares the invoice data such as invoice number, calculates the tax, carrier, and total, and then it passes all this information to the view. The controller delegates to the invoice view with all the prepared data.
-  public String render(String invoiceNumber, String invoiceDate,
-                          String customerName, String billingAddress, String customerNotes,
+  public String render(String invoiceNumber, String invoiceDate, String customerName, String customerEmail, String customerPhone,
+                           String billingAddress, String customerNotes,
                           List<OrderLine> orderLines,
                           double subtotal, double tax, double carrier, double total) { // This method generates the complete invoice page.
           StringBuilder html = new StringBuilder();
@@ -20,7 +20,7 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
           html.append("<div style='max-width: 1000px; margin: 0 auto; background: #B6EFE2; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1);'>\n");
 
           html.append(generateCompanyHeader(invoiceNumber, invoiceDate));
-          html.append(generateCustomerInfo(customerName, billingAddress, customerNotes));
+          html.append(generateCustomerInfo(customerName, customerEmail, customerPhone, billingAddress, customerNotes));
           html.append(generateOrderTable(orderLines));
           html.append(generateTotals(subtotal, tax, carrier, total));
 
@@ -64,32 +64,33 @@ public class  InvoiceView extends BaseView { // The controller will receive the 
               return html.toString();
           }
 
-      private String generateCustomerInfo(String customerName, String billingAddress, String customerNotes) { // This generates the customer information with their name and billing address. If there are any notes, it will also display that.
-      StringBuilder html = new StringBuilder();
+ // This generates the customer information with their name and billing address. If there are any notes, it will also display that.
+    private String generateCustomerInfo(String customerName, String customerEmail, String customerPhone, 
+                                       String billingAddress, String customerNotes) {
+        StringBuilder html = new StringBuilder();
 
-      html.append("<div style='display: flex; justify-content: space-between; margin-bottom: 30px; gap: 20px;'>\n");
+        html.append("<div style='background-color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;'>\n");
+        html.append("    <h3 style='color: #1e90ff; margin-top: 0;'>Customer Information</h3>\n");
+        html.append("    <p><strong>Name:</strong> ").append(escapeHtml(customerName)).append("</p>\n");
 
-      html.append("  <div style='flex: 1; padding: 15px; background-color: #D4EBF1; border: 1px solid #999; border-radius: 5px;'>\n");
-      html.append("    <h3 style='margin: 0 0 10px 0; color: #333; font-size: 18px; font-weight: bold;'>Bill To:</h3>\n");
-      html.append("    <div style='color: #333; line-height: 1.6; font-size: 14px;'>\n");
-      html.append("      <strong>").append(escapeHtml(customerName)).append("</strong><br>\n");
-      html.append("      ").append(escapeHtml(billingAddress)).append("\n");
-      if (customerNotes != null && !customerNotes.trim().isEmpty()) {
-          html.append("      <br><br><em>Notes: ").append(escapeHtml(customerNotes)).append("</em>\n");
-      }
-      html.append("    </div>\n");
-      html.append("  </div>\n");
-      html.append("  <div style='flex: 1; padding: 15px; background-color: #D4EBF1; border: 1px solid #999; border-radius: 5px;'>\n");
-      html.append("    <h3 style='margin: 0 0 10px 0; color: #333; font-size: 18px; font-weight: bold;'>Ship To:</h3>\n");
-      html.append("    <div style='color: #333; line-height: 1.6; font-size: 14px;'>\n");
-      html.append("      <strong>").append(escapeHtml(customerName)).append("</strong><br>\n");
-      html.append("      ").append(escapeHtml(billingAddress)).append("\n");
-      html.append("    </div>\n");
-      html.append("  </div>\n");
-      html.append("</div>\n");
+        if (customerEmail != null && !customerEmail.trim().isEmpty()) {
+            html.append("    <p><strong>Email:</strong> ").append(escapeHtml(customerEmail)).append("</p>\n");
+        }
 
-      return html.toString();
-  }
+        if (customerPhone != null && !customerPhone.trim().isEmpty()) {
+            html.append("    <p><strong>Phone:</strong> ").append(escapeHtml(customerPhone)).append("</p>\n");
+        }
+
+        html.append("    <p><strong>Billing Address:</strong> ").append(escapeHtml(billingAddress)).append("</p>\n");
+
+        if (customerNotes != null && !customerNotes.trim().isEmpty()) {
+            html.append("    <p><strong>Notes:</strong> ").append(escapeHtml(customerNotes)).append("</p>\n");
+        }
+
+        html.append("</div>\n");
+
+        return html.toString();
+    }
       
   private String generateOrderTable(List<OrderLine> orderLines) { // This generates the order table with the order lines.
       StringBuilder html = new StringBuilder();
