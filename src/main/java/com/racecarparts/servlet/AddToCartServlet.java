@@ -8,6 +8,8 @@ import com.racecarparts.util.ProductCatalog;
 import com.racecarparts.Factory.RaceCarPartFactory;
 import com.racecarparts.shop.RaceCarPart;
 import com.racecarparts.decorator.PerformanceTuningDecorator;
+import com.racecarparts.decorator.AluminumCoatingDecorator;
+import com.racecarparts.decorator.SteelCoatingDecorator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,8 +44,10 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
                 RaceCarPart product = RaceCarPartFactory.createPart(partId);  // FACTORY METHOD HERE; This is creating a new part based on the part ID that we just got from the request.
                 
                 if (product != null && quantity > 0) {
-                        RaceCarPart tunedPart = new PerformanceTuningDecorator(product);
-                        cart.addItem(tunedPart, quantity); // Adding item to cart
+                        RaceCarPart tunedPart = new PerformanceTuningDecorator(product); // This is using the decorator pattern that is defined in the java files, so it adds performance tuning to the part.
+                        RaceCarPart coatedPart = new AluminumCoatingDecorator(tunedPart); // This decorator adds Aluminum Coating on top of the Performance Tuning decorator.
+                        RaceCarPart coatedPart2 = new SteelCoatingDecorator(coatedPart); // This decorator adds Steel Coating on top of the Aluminum Coating decorator (along with the Performance Tuning Decorator).
+                        cart.addItem(tunedPart, quantity); // Adding item to cart for decorated part.
                 }
                 
                 response.sendRedirect("index"); // Redirect back to the home page

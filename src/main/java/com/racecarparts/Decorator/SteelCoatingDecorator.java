@@ -2,7 +2,7 @@ package com.racecarparts.decorator;
 import com.racecarparts.shop.RaceCarPart;
 
 public class SteelCoatingDecorator extends PartDecorator { // This class adds Steel Coating to the part.
-  private static final double COATING_PRICE = 350.00;
+  private static final double COATING_PRICE = 253.00;
   private static final String COATING_DESCRIPTION = " + Steel Coating";
 
   public SteelCoatingDecorator(RaceCarPart part) { // This constructor adds Steel Coating to the part.
