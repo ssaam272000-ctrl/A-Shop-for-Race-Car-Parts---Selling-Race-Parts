@@ -47,7 +47,7 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
                         RaceCarPart tunedPart = new PerformanceTuningDecorator(product); // This is using the decorator pattern that is defined in the java files, so it adds performance tuning to the part.
                         RaceCarPart coatedPart = new AluminumCoatingDecorator(tunedPart); // This decorator adds Aluminum Coating on top of the Performance Tuning decorator.
                         RaceCarPart coatedPart2 = new SteelCoatingDecorator(coatedPart); // This decorator adds Steel Coating on top of the Aluminum Coating decorator (along with the Performance Tuning Decorator).
-                        cart.addItem(tunedPart, quantity); // Adding item to cart for decorated part.
+                        cart.addItem(coatedPart2, quantity); // Adding the fully decorated part to cart with all enhancements.
                 }
                 
                 response.sendRedirect("index"); // Redirect back to the home page
