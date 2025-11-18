@@ -43,11 +43,17 @@ public class AddToCartServlet extends HttpServlet { // handle all the Post reque
                 
                 RaceCarPart product = RaceCarPartFactory.createPart(partId);  // FACTORY METHOD HERE; This is creating a new part based on the part ID that we just got from the request.
                 
-                if (product != null && quantity > 0) {
+                if (product != null && quantity > 0) { // This is checking if the part exists and if the quantity is greater than 0.
                         RaceCarPart tunedPart = new PerformanceTuningDecorator(product); // This is using the decorator pattern that is defined in the java files, so it adds performance tuning to the part.
-                        RaceCarPart coatedPart = new AluminumCoatingDecorator(tunedPart); // This decorator adds Aluminum Coating on top of the Performance Tuning decorator.
-                        RaceCarPart coatedPart2 = new SteelCoatingDecorator(coatedPart); // This decorator adds Steel Coating on top of the Aluminum Coating decorator (along with the Performance Tuning Decorator).
-                        cart.addItem(coatedPart2, quantity); // Adding the fully decorated part to cart with all enhancements.
+                        RaceCarPart finalPart;
+                        if (product.getDescription().contains("Steel")) { // This is checking if the part is a steel part, and if it is, it adds steel coating to the part.
+                                finalPart = new SteelCoatingDecorator(tunedPart); // This is using the decorator pattern that is defined in the java files, so it adds steel coating to the part.
+                        } else if (product.getDescription().contains("Aluminum")) { // This is checking if the part is an aluminum part, and if it is, it adds aluminum coating to the part.
+                                finalPart = new AluminumCoatingDecorator(tunedPart); // This is using the decorator pattern that is defined in the java files, so it adds aluminum coating to the part.
+                        } else { // If it is neither steel nor aluminum, it just adds the performance tuning to the part.
+                                finalPart = tunedPart; // If no specific coating is needed, just use the tuned part
+                        }
+                        cart.addItem(finalPart, quantity); // Adding the fully decorated part to cart with all enhancements.
                 }
                 
                 response.sendRedirect("index"); // Redirect back to the home page
