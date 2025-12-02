@@ -1,105 +1,150 @@
-<%@page import="java.util.Date"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.racecarparts.model.EngineBlock" %>
-<%@ page import="com.racecarparts.util.ProductCatalog" %>
-<%@ page import="com.racecarparts.model.ShoppingCart" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    // Make products available to JSTL
-    request.setAttribute("parts", ProductCatalog.getAllProducts());
-    
-    // Get cart items count
-    ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-    int cartItems = (cart != null) ? cart.getTotalItems() : 0;
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ page import="java.util.List" %>
+<%@ page import="com.inverse.model.Product" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>A Shop for Race Car Parts</title>
-<style>
-/* body {
-    background-color: hsl(89, 43%, 51%);
-    font-family: Arial, sans-serif;
-    padding: 20px;
-}
-h1 {
-    background-color: hsl(185, 65%, 70%);
-    padding: 15px;
-    margin: 10px 0;
-}
-h2 {
-    background-color: DodgerBlue;
-    color: white;
-    padding: 10px;
-    margin: 10px 0;
-}
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-li {
-    background-color: white;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 5px;
-}
-.price {
-    font-size: 24px;
-    font-weight: bold;
-    color: #e91e63;
-}
-.cart-link {
-    float: right;
-    background-color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    color: #0097a7;
-    font-weight: bold;
-}
-button {
-    background-color: #00bcd4;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-button:hover {
-    background-color: #0097a7;
-} */
-</style>
+    <meta charset="UTF-8">
+    <title>Inverse Ordering System | Race Car Parts</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #111, #333);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        header h3 {
+            margin-top: 10px;
+            font-weight: 400;
+            font-size: 1.1rem;
+            color: #ddd;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .card h3 {
+            color: #222;
+            margin: 15px 0 5px;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            color: #555;
+            padding: 0 15px;
+            min-height: 50px;
+            font-size: 0.95rem;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0a9b31;
+            margin: 15px 0;
+        }
+
+        .order-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .order-btn:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
-
 <body>
-    <section>
-        <h1>A Shop for Race Car Parts <a href="cart" class="cart-link">View Cart (<%= cartItems %>)</a></h1>
-        <h2>Hemanth-Saam LLC</h2>
-        <p>Date: <%= new Date() %></p>
-    
-    </section>
-    <section>
-          <ul>
-        <c:forEach items="${parts}" var="part">
-            <li>
-                <div class="price">$<fmt:formatNumber value="${part.price}" pattern="#,##0.00"/></div>
-                <div><strong>Part ${part.partId}</strong> - ${part.name}</div>
-                <form action="addToCart" method="post">
-                    <input type="hidden" name="partId" value="${part.partId}">
-                    <input type="hidden" name="quantity" value="1">
-                    <button type="submit">Add to Cart</button>
+    <header>
+        <h1>Inverse Ordering System</h1>
+        <h3>Available Race Car Parts</h3>
+    </header>
+
+    <div class="container">
+        <%
+            List<Product> productList = (List<Product>) request.getAttribute("productList");
+            if (productList != null && !productList.isEmpty()) {
+                for (Product product : productList) {
+        %>
+            <div class="card">
+                <!-- ✅ Corrected image path -->
+                <img src="<%= request.getContextPath() + "/" + product.getImageUrl() %>"
+                     alt="<%= product.getName() %>">
+
+                <h3><%= product.getName() %></h3>
+                <p><%= product.getDescription() %></p>
+
+                <!-- 💰 Currency symbol -->
+                <div class="price">₹<%= String.format("%.2f", product.getPrice()) %></div>
+
+                <!-- ✅ Updated form to point to OrderServlet -->
+                <form action="<%= request.getContextPath() %>/placeOrder" method="get">
+                    <input type="hidden" name="productId" value="<%= product.getProductId() %>">
+                    <!-- You can make customerName dynamic later -->
+                    <input type="hidden" name="customerName" value="Guest">
+                    <button class="order-btn">Order Now</button>
                 </form>
-            </li>
-        </c:forEach>
-        </ul>      
-    </section>
-    <section>
-       <h3>Shop Owner's Report</h3> 
-    </section>    
-
-
+            </div>
+        <%
+                }
+            } else {
+        %>
+            <p style="text-align:center; font-size:1.1rem; color:#666;">
+                No products available.
+            </p>
+        <%
+            }
+        %>
+    </div>
 </body>
 </html>
